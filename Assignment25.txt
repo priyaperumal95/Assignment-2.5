@@ -1,0 +1,37 @@
+Cluster:
+
+   In a computer system, a cluster is a group of servers and other resources that act like a single system and enable high availability and, in some cases, load balancing and parallel processing.
+
+   In general the cluster is a group of similar things.
+
+Hadoop Cluster:
+
+    A Hadoop cluster is a special type of computational cluster designed specifically for storing and analyzing huge amounts of unstructured data in a distributed computing environment.
+
+    Such clusters run Hadoop's open source distributed processing software on low-cost commodity computers. Typically one machine in the cluster is designated as the NameNode and another machine as JobTracker; these are the masters. The rest of the machines in the cluster act as both DataNode and TaskTracker; these are the slaves. Hadoop clusters are often referred to as "shared nothing" systems because the only thing that is shared between nodes is the network that connects them.
+
+    Hadoop clusters are known for boosting the speed of data analysis applications. They also are highly scalable: If a cluster's processing power is overwhelmed by growing volumes of data, additional cluster nodes can be added to increase throughput. Hadoop clusters also are highly resistant to failure because each piece of data is copied onto other cluster nodes, which ensures that the data is not lost if one node fails. 
+
+Componenets of Hadoop 1.x:
+ 
+       NameNode
+          Secondary NameNode
+          DataNode
+          JobTracker
+          TaskTracker
+
+NameNode:
+    The NameNode executes HDFS file system namespace operations like opening, closing, and renaming files and directories. It also determines the mapping of blocks to DataNodes. The list of HDFS files belonging to each block, the current location of the block replicas on the DataNodes, the state of the file, and the access control information is the metadata for the cluster and is managed by the NameNode.
+
+Secondary NameNode:
+    Secondary NameNode in hadoop is a specially dedicated node in HDFS cluster whose main function is to take checkpoints of the file system metadata present on namenode. It is not a backup namenode. It just checkpoints namenode's file system namespace.
+
+DataNode:
+    The DataNodes are responsible for serving read and write requests from the HDFS file system’s clients. The Datanodes also perform block replica creation, deletion, and replication upon instruction from the NameNode. The Datanodes are the arbiter of the state of the replicates and they report this to the NameNode. It sends block reporting to the NameNode on cluster startup as well as periodically at every 10th Heartbeat.
+
+JobTracker:
+    Controls overall execution of mapreduce jobs. The JobTracker is the service within Hadoop that farms out MapReduce tasks to specific nodes in the cluster, ideally the nodes that have the data, or at least are in the same rack. Client applications submit jobs to the Job tracker. The JobTracker talks to the NameNode to determine the location of the data. The JobTracker locates TaskTracker nodes with available slots at or near the data. It submits the work to the chosen TaskTracker nodes. The TaskTracker nodes are monitored by the job tracker. If they do not submit heartbeat signals often enough, they are deemed to have failed and the work is scheduled on a different TaskTracker.
+
+TaskTracker:
+    A TaskTracker is a node in the cluster that accepts tasks from the jobtracker. Every TaskTracker is configured with a set of slots, these indicate the number of tasks that it can accept. When the JobTracker tries to find somewhere to schedule a task within the MapReduce operations, it first looks for an empty slot on the same server that hosts the DataNode containing the data, and if not, it looks for an empty slot on a machine in the same rack.
+
